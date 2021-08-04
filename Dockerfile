@@ -31,7 +31,7 @@ ARG MVN_PARAMETER="--batch-mode --no-transfer-progress \
     -Dquarkus.container-image.build=false -Dquarkus.container-image.push=false"
 
 RUN mkdir -p /projects
-ADD . /projects
+COPY . /projects
 RUN mvn clean install
 
 
