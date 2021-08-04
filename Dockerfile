@@ -21,20 +21,6 @@
 # docker run -i --rm -p 8080:8080 -p 5005:5005 -e JAVA_ENABLE_DEBUG="true" quarkus/basic-auth-jvm
 #
 ###
-FROM quay.io/eclipse/che-java11-maven:7.24.2 AS maven
-
-USER root
-
-ARG MVN_PARAMETER="--batch-mode --no-transfer-progress \
-    -DskipTests=true -Dmaven.test.skip -Dskip.jar=true -Dskip.javadoc=true -Dskip.source=true \
-    -Dskip.site=true \
-    -Dquarkus.container-image.build=false -Dquarkus.container-image.push=false"
-
-RUN mkdir -p /projects
-COPY . /projects
-RUN mvn clean install
-
-
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.4 
 
 ARG JAVA_PACKAGE=java-11-openjdk-headless
@@ -57,10 +43,10 @@ RUN microdnf install curl ca-certificates ${JAVA_PACKAGE} \
 # Configure the JAVA_OPTIONS, you can add -XshowSettings:vm to also display the heap size.
 ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 # We make four distinct layers so if there are application changes the library layers can be re-used
-COPY --from=maven --chown=1001 target/quarkus-app/lib/ /deployments/lib/
-COPY --from=maven --chown=1001 target/quarkus-app/*.jar /deployments/
-COPY --from=maven --chown=1001 target/quarkus-app/app/ /deployments/app/
-COPY --from=maven --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
+COPY --chown=1001 target/quarkus-app/lib/ /deployments/lib/
+COPY --chown=1001 target/quarkus-app/*.jar /deployments/
+COPY --chown=1001 target/quarkus-app/app/ /deployments/app/
+COPY --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
 
 EXPOSE 8080
 USER 1001

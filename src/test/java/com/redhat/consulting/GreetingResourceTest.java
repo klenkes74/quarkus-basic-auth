@@ -4,6 +4,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
@@ -37,6 +38,6 @@ public class GreetingResourceTest {
                 .when()
                 .get("/hello/auth")
                 .then()
-                .statusCode(403);
+                .statusCode(anyOf(is(401), is(403)));
     }
 }
