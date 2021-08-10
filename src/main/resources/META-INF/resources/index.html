@@ -116,25 +116,12 @@
     <div class="left-column">
         <p class="lead"> Congratulations, you have created a new Quarkus cloud application.</p>
 
-        <h2>What is this page?</h2>
+        <h2>RESTEasy JAX-RS</h2>
 
-        <p>This page is served by Quarkus. The source is in
-            <code>src/main/resources/META-INF/resources/index.html</code>.</p>
-
-        <h2>What are your next steps?</h2>
-
-        <p>If not already done, run the application in <em>dev mode</em> using: <code>./mvnw compile quarkus:dev</code>.
-        </p>
-        <ul>
-            <li>Your static assets are located in <code>src/main/resources/META-INF/resources</code>.</li>
-            <li>Configure your application in <code>src/main/resources/application.properties</code>.</li>
-            <li>Quarkus now ships with a <a href="/q/dev/">Dev UI</a> (available in dev mode only)</li>
-            <li>Play with the provided code located in <code>src/main/java</code>:</li>
-        </ul>
-                <div class="provided-code">
-            <h3>RESTEasy JAX-RS</h3>
+        <div class="provided-code">
             <p>Easily start your RESTful Web Services</p>
-            <p><code>@Path: <a href="/hello" class="path-link" target="_blank">/hello</a></code></p>
+            <p><code>@Path: <a href="/hello" class="path-link" target="_blank">/hello</a></code> (no auth)</p>
+            <p><code>@Path: <a href="/hello" class="path-link" target="_blank">/hello/auth</a></code> (basic auth with user "test" and password "test")</p>
             <p><a href="https://quarkus.io/guides/getting-started#the-jax-rs-resources" class="guide-link" target="_blank">Related guide section...</a></p>
         </div>
 
@@ -145,7 +132,7 @@
             <ul>
                 <li>GroupId: <code>com.redhat.consulting</code></li>
                 <li>ArtifactId: <code>basic-auth</code></li>
-                <li>Version: <code>1.0.0-SNAPSHOT</code></li>
+                <li>Version: <code>1.0.0</code></li>
                 <li>Quarkus Version: <code>2.1.0.Final</code></li>
             </ul>
         </div>

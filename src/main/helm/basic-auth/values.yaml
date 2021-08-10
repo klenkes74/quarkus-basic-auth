@@ -4,6 +4,8 @@
 
 replicaCount: 1
 
+source: 'https://github.com/klenkes74/quarkus-basic-auth.git'
+
 image:
   repository: quay.io/klenkes74/basic-auth
   pullPolicy: IfNotPresent
@@ -57,8 +59,8 @@ ingress:
 
 resources:
   limits:
-    cpu: 500m
-    memory: 512Mi
+    cpu: 100m
+    memory: 256Mi
   requests:
     cpu: 50m
     memory: 128Mi

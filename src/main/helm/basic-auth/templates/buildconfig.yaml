@@ -1,0 +1,32 @@
+---
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: {{ include "basic-auth.fullname" . }}
+  labels:
+    {{- include "basic-auth.labels" . | nindent 4 }}
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "{{ include "basic-auth.fullname" . }}:latest"
+  resources:
+    limits:
+      cpu: '4'
+      memory: 6Gi
+  successfulBuildsHistoryLimit: 2
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'ubi-quarkus-native-s2i:21.1-java11'
+  source:
+    type: Git
+    git:
+      uri: "{{ .Values.source }}"
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+  runPolicy: Serial
