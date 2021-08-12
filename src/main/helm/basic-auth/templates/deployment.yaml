@@ -31,22 +31,41 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ include "basic-auth.fullname" . }}:latest"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
+            - name: https
+              containerPort: 8443
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /q/health/live
               port: http
+            initialDelaySeconds: 60
           readinessProbe:
             httpGet:
               path: /q/health/ready
               port: http
+            initialDelaySeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: app-tls
+              mountPath: /deployments/certs
+            - name: app-config
+              mountPath: /deployments/config
+      volumes:
+        - name: app-config
+          configMap:
+            name: {{ include "basic-auth.serviceAccountName" . }}-config
+            defaultMode: 420
+        - name: app-tls
+          secret:
+            secretName: {{ include "basic-auth.serviceAccountName" . }}-tls
+            defaultMode: 420
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

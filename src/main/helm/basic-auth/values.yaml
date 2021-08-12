@@ -8,9 +8,9 @@ source: 'https://github.com/klenkes74/quarkus-basic-auth.git'
 
 image:
   repository: quay.io/klenkes74/basic-auth
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "${project.version}"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -25,7 +25,10 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: "/q/metrics"
+  prometheus.io/port: "8080"
 
 podSecurityContext: {}
   # fsGroup: 2000
@@ -40,7 +43,9 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port:
+    http: 8080
+    https: 8443
 
 route: "${project.name}-{{ .Release.namespace }}"
 

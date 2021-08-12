@@ -16,8 +16,7 @@ public class GreetingResourceTest {
           .when()
                 .get("/hello")
           .then()
-             .statusCode(200)
-             .body(is("Hello RESTEasy"));
+             .statusCode(200);
     }
 
     @Test
@@ -27,8 +26,7 @@ public class GreetingResourceTest {
                 .auth().basic("test","test")
                 .get("/hello/auth")
                 .then()
-                .statusCode(200)
-                .body(is("Hello RESTEasy"));
+                .statusCode(200);
     }
 
 
