@@ -1,0 +1,33 @@
+---
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: {{ include "basic-auth.fullname" . }}
+  labels:
+    {{- include "basic-auth.labels" . | nindent 4 }}
+spec:
+  lookupPolicy:
+    local: false
+---
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: ubi-quarkus-native-s2i
+  labels:
+    {{- include "basic-auth.labels" . | nindent 4 }}
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - name: 19.3.1-java11
+      annotations:
+        openshift.io/imported-from: 'quay.io/quarkus/ubi-quarkus-native-s2i:19.3.1-java11'
+      from:
+        kind: DockerImage
+        name: 'quay.io/quarkus/ubi-quarkus-native-s2i:19.3.1-java11'
+    - name: 21.1-java11
+      annotations:
+        openshift.io/imported-from: 'quay.io/quarkus/ubi-quarkus-native-s2i:21.1-java11'
+      from:
+        kind: DockerImage
+        name: 'quay.io/quarkus/ubi-quarkus-native-s2i:21.1-java11'
