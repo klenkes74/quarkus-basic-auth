@@ -1,0 +1,10 @@
+GET http://{{host}}:{{port}}/q/metrics
+
+###
+
+GET http://{{host}}:{{port}}/hello
+
+###
+
+GET http://{{host}}:{{port}}/hello/auth
+Authorization: Basic test:test

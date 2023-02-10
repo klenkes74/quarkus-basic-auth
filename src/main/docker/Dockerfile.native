@@ -14,7 +14,7 @@
 # docker run -i --rm -p 8080:8080 quarkus/basic-auth
 #
 ###
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.4
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.11
 WORKDIR /work/
 RUN chown 1001 /work \
     && chmod "g+rwX" /work \
